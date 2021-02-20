@@ -34,6 +34,7 @@ def main():
     running = True
     SQ_SELECTED = () #no square is selected,keep track of the last click of the user (tuple: (row,col))
     PLAYERCLICKS = [] #keep track of the player clicks (two tuples: [(6,4),(4,4)]
+    p.display.set_caption("Chess with Rohit")
     while running:
         for e in p.event.get():
             if e.type == p.QUIT:
