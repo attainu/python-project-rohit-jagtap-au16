@@ -30,6 +30,7 @@ def main():
     gs = chessEngine.GameState()
     validMoves = gs.getValidMoves()
     moveMade = False #flag veriable for when a move is made
+    Animate = False # flag veriable for when we should animate a move
     LoadImages()  #only do this once, before the while loop.
     running = True
     SQ_SELECTED = () #no square is selected,keep track of the last click of the user (tuple: (row,col))
@@ -57,6 +58,7 @@ def main():
                     if move in validMoves:
                         gs.makeMove(move)
                         moveMade = True
+                        Animate = True
                         SQ_SELECTED = () # reset user clicks
                         PLAYERCLICKS = [] #
                     else:
@@ -66,11 +68,21 @@ def main():
                 if e.key == p.K_z: # it will undo when z is pressed
                     gs.undoMove()
                     moveMade = True
+                    Animate = False
+                if e.key == p.K_r: # reset the board when r is pressed
+                    gs = chessEngine.GameState()
+                    validMoves = gs.getValidMoves()
+                    SQ_SELECTED = ()
+                    PLAYERCLICKS = []
+                    moveMade = False
+                    Animate = False
 
         if moveMade:
-            AnimateMove(gs.moveLog[-1], screen, gs.board, clock)
+            if Animate:
+                AnimateMove(gs.moveLog[-1], screen, gs.board, clock)
             validMoves = gs.getValidMoves()
             moveMade = False
+            Animate = False
 
         drawGameState(screen, gs, validMoves, SQ_SELECTED)
         clock.tick(MAX_FPS)
