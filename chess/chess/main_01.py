@@ -35,6 +35,7 @@ def main():
     SQ_SELECTED = () #no square is selected,keep track of the last click of the user (tuple: (row,col))
     PLAYERCLICKS = [] #keep track of the player clicks (two tuples: [(6,4),(4,4)]
     p.display.set_caption("Chess with Rohit")
+
     while running:
         for e in p.event.get():
             if e.type == p.QUIT:
@@ -70,14 +71,34 @@ def main():
             validMoves = gs.getValidMoves()
             moveMade = False
 
-        drawGameState(screen, gs)
+        drawGameState(screen, gs, validMoves, SQ_SELECTED)
         clock.tick(MAX_FPS)
         p.display.flip()
 
+# highlight square selected and moves for piece sselected
+def HighlightSquare(screen, gs, validMoves,SQ_SELECTED):
+    if SQ_SELECTED != ():
+        r, c = SQ_SELECTED
+        if gs.board[r][c][0] == ('w' if gs.WhiteToMove else 'b'):# sq selected a piece that can be moved
+            # highlight selected square
+            s = p.Surface((SQ_SIZE, SQ_SIZE))
+            s.set_alpha(100) # transparency value
+            s.fill(p.Color('blue'))
+            screen.blit(s, (c*SQ_SIZE, r*SQ_SIZE))
+# highlight square from that square
+            s.fill(p.Color('yellow'))
+            for move in validMoves:
+                if move.startRow == r and move.startCol == c:
+                    screen.blit(s, (move.endCol * SQ_SIZE, move.endRow * SQ_SIZE))
+
+
+
+
 # responsibale for the grapnics with in current game state.
-def drawGameState(screen, gs):
+def drawGameState(screen, gs, validMoves, SQ_SELECTED):
     drawBoard(screen) # draw square on the board
     drawPieces(screen, gs.board) #draw pieces on the top of the squares
+    HighlightSquare(screen, gs, validMoves, SQ_SELECTED)
 
 # draw the squares on the board
 def drawBoard(screen):
