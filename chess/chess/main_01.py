@@ -56,7 +56,6 @@ def main():
                         PLAYERCLICKS.append(SQ_SELECTED)# append both first and second clicks
                     if len(PLAYERCLICKS) == 2: #this is after second click
                         move = chessEngine.Move(PLAYERCLICKS[0], PLAYERCLICKS[1], gs.board)
-                        print(move.getChessNotation())
                         if move in validMoves:
                             gs.makeMove(move)
                             moveMade = True
@@ -78,6 +77,8 @@ def main():
                     PLAYERCLICKS = []
                     moveMade = False
                     Animate = False
+                if e.key == p.K_q:
+                    running = False
 
         if moveMade:
             if Animate:
@@ -91,9 +92,9 @@ def main():
         if gs.checkMate:
             GameOver = True
             if gs.WhiteToMove:
-                drawText(screen, "Black Wins By CheckMate")
+                drawText(screen, "Black KIng Win By CheckMate")
             else:
-                drawText(screen, "White Win By Checkmate")
+                drawText(screen, "White KIng Win By Checkmate")
         elif gs.Stalemate:
             GameOver = True
             drawText(screen, "Stalemate")
