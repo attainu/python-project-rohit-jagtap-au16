@@ -36,6 +36,7 @@ def main():
     SQ_SELECTED = () #no square is selected,keep track of the last click of the user (tuple: (row,col))
     PLAYERCLICKS = [] #keep track of the player clicks (two tuples: [(6,4),(4,4)]
     p.display.set_caption("Chess with Rohit")
+    GameOver = False
 
     while running:
         for e in p.event.get():
@@ -43,26 +44,27 @@ def main():
                 running = False
             # mouse handler
             elif e.type == p.MOUSEBUTTONDOWN:
-                location = p.mouse.get_pos() # (x,y) location of mouse
-                col = location[0] // SQ_SIZE
-                row = location[1] // SQ_SIZE
-                if SQ_SELECTED == (row, col):#the user click the same square twice.
-                    SQ_SELECTED = () # deselect
-                    PLAYERCLICKS = [] #clear players clicks
-                else:
-                    SQ_SELECTED = (row, col)
-                    PLAYERCLICKS.append(SQ_SELECTED)# append both first and second clicks
-                if len(PLAYERCLICKS) == 2: #this is after second click
-                    move = chessEngine.Move(PLAYERCLICKS[0], PLAYERCLICKS[1], gs.board)
-                    print(move.getChessNotation())
-                    if move in validMoves:
-                        gs.makeMove(move)
-                        moveMade = True
-                        Animate = True
-                        SQ_SELECTED = () # reset user clicks
-                        PLAYERCLICKS = [] #
+                if not GameOver:
+                    location = p.mouse.get_pos() # (x,y) location of mouse
+                    col = location[0] // SQ_SIZE
+                    row = location[1] // SQ_SIZE
+                    if SQ_SELECTED == (row, col):#the user click the same square twice.
+                        SQ_SELECTED = () # deselect
+                        PLAYERCLICKS = [] #clear players clicks
                     else:
-                        PLAYERCLICKS = [SQ_SELECTED]
+                        SQ_SELECTED = (row, col)
+                        PLAYERCLICKS.append(SQ_SELECTED)# append both first and second clicks
+                    if len(PLAYERCLICKS) == 2: #this is after second click
+                        move = chessEngine.Move(PLAYERCLICKS[0], PLAYERCLICKS[1], gs.board)
+                        print(move.getChessNotation())
+                        if move in validMoves:
+                            gs.makeMove(move)
+                            moveMade = True
+                            Animate = True
+                            SQ_SELECTED = () # reset user clicks
+                            PLAYERCLICKS = [] #
+                        else:
+                            PLAYERCLICKS = [SQ_SELECTED]
             # key handler
             elif e.type == p.KEYDOWN:
                 if e.key == p.K_z: # it will undo when z is pressed
@@ -85,6 +87,17 @@ def main():
             Animate = False
 
         drawGameState(screen, gs, validMoves, SQ_SELECTED)
+
+        if gs.checkMate:
+            GameOver = True
+            if gs.WhiteToMove:
+                drawText(screen, "Black Wins By CheckMate")
+            else:
+                drawText(screen, "White Win By Checkmate")
+        elif gs.Stalemate:
+            GameOver = True
+            drawText(screen, "Stalemate")
+
         clock.tick(MAX_FPS)
         p.display.flip()
 
@@ -155,8 +168,13 @@ def AnimateMove(move, screen, board, clock):
         p.display.flip()
         clock.tick(60)
 
-
-
+def drawText(screen, text):
+    font = p.font.SysFont("helvitca", 32, True, False)
+    textobject = font.render(text, 0, p.Color('Gray'))
+    textlocation = p.Rect(0, 0, WIDTH, HEIGHT).move(WIDTH/2 - textobject.get_width()/2, HEIGHT/2 - textobject.get_height()/2)
+    screen.blit(textobject,textlocation)
+    textobject = font.render(text, 0, p.Color("black"))
+    screen.blit(textobject, textlocation.move(2,2))
 
 if __name__ == '__main__':
     main()

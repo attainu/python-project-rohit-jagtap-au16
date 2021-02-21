@@ -26,6 +26,8 @@ class GameState():
         self.WhiteKingLocation = (7, 4)
         self.BlackKingLocation = (0, 4)
         self.inCheck= False
+        self.checkMate = False
+        self.Stalemate = False
         self.pins = []
         self.checks = []
 
@@ -93,7 +95,31 @@ class GameState():
                 self.getKnightMoves(kingRow, kingCol, moves)
         else: # not in check so all moves are fine
             moves = self.getAllPossibleMoves()
+        if len(moves) == 0:# either checkmate or stalemate
+            if self.inCheck:
+                self.checkMate = True
+            else:
+                self.Stalemate = True
+        else:
+            self.checkMate = False
+            self.Stalemate = False
         return moves
+
+    def inCheck(self):
+        if self.WhiteToMove:
+            return self.squareUnderAttack(self.WhiteKingLocation[0], self.WhiteKingLocation[1])
+        else:
+            return self.squareUnderAttack(self.BlackKingLocation[0],self.WhiteKingLocation[1])
+
+    def squareUnderAttack(self, r, c):
+        self.WhiteToMove = not self.WhiteToMove # switch to opponants turn
+        oppMoves = self.getAllPossibleMoves()
+        for Move in oppMoves:
+            if Move.endRow == r and Move.endCol == c: #square under attack
+                self.WhiteToMove = not self.WhiteToMove # switch turns back
+                return  True
+        self.WhiteToMove = not  self.WhiteToMove
+
 
     def getAllPossibleMoves(self):
         moves = []
