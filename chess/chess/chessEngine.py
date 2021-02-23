@@ -16,7 +16,7 @@ class GameState():
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["wp", "wp", "wp", "wp", "wp", "wp", "wp", "wp"],
+            ["--", "--", "--", "--", "--", "--", "--", "wp"],
             ["wr", "wn", "wb", "wq", "wk", "wb", "wn", "wr"]]
         self.MoveFunctions = {'p': self.getPawnMoves, 'r': self.getRookMoves, 'n': self.getKnightMoves,
                               'b': self.getBishopMoves, 'q': self.getQueenMoves, 'k': self.getKingMoves}
@@ -105,11 +105,11 @@ class GameState():
             self.Stalemate = False
         return moves
 
-    def inCheck(self):
-        if self.WhiteToMove:
-            return self.squareUnderAttack(self.WhiteKingLocation[0], self.WhiteKingLocation[1])
-        else:
-            return self.squareUnderAttack(self.BlackKingLocation[0],self.WhiteKingLocation[1])
+    # def inCheck(self):
+    #     if self.WhiteToMove:
+    #         return self.squareUnderAttack(self.WhiteKingLocation[0], self.WhiteKingLocation[1])
+    #     else:
+    #         return self.squareUnderAttack(self.BlackKingLocation[0],self.WhiteKingLocation[1])
 
     def squareUnderAttack(self, r, c):
         self.WhiteToMove = not self.WhiteToMove # switch to opponants turn
