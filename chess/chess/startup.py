@@ -23,8 +23,8 @@ def main_menu():
 
         mx,my = pygame.mouse.get_pos()
 
-        button_1 = screen.blit(font.render('NEW GAME', True, (255,0,0)), (50, 100))
-        button_2 = screen.blit(font.render('END GAME', True, (255,0,0)), (50, 150))
+        button_1 = screen.blit(font.render('NEW GAME', True, (255,255,255)), (50, 100))
+        button_2 = screen.blit(font.render('END GAME', True, (255,255,255)), (50, 150))
         pygame.display.update()
         if button_1.collidepoint((mx,my)):
             if click:

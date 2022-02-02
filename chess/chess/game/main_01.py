@@ -176,5 +176,5 @@ def drawText(screen, text):
     textobject = font.render(text, 0, p.Color("black"))
     screen.blit(textobject, textlocation.move(2,2))
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
