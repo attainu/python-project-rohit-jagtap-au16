@@ -17,8 +17,8 @@ click = False
 
 def main_menu():
     while True:
-        screen.fill((53,81,92))
-        draw_text('MENU',font,(255,255,255),screen,50,50)
+        screen.fill((53, 81, 92))
+        draw_text('MENU', font, (255, 255, 255), screen,50,50)
 
         mx,my = pygame.mouse.get_pos()
 

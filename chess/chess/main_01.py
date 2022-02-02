@@ -5,10 +5,10 @@ this is our main driver file.it will be resposable for handling useer input and 
 import pygame as p
 from chess import chessEngine
 
-WIDTH = HEIGHT = 512
+WIDTH = HEIGHT = 380
 DIMENSION = 8 # DIMENSION OF THE CHESS BOARD 8X8.
 SQ_SIZE = HEIGHT // DIMENSION
-MAX_FPS = 30 # FOR ANIMATION LATER PART
+MAX_FPS = 30  # FOR ANIMATION LATER PART
 IMAGES = {}
 
 # initialize a global dictionary of images. this will be called exactly once in the main
@@ -176,5 +176,5 @@ def drawText(screen, text):
     textobject = font.render(text, 0, p.Color("black"))
     screen.blit(textobject, textlocation.move(2,2))
 
-# if __name__ == '__main__':
-#     main()
+if __name__ == '__main__':
+    main()

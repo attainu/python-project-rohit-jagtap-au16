@@ -1,4 +1,9 @@
 # CHESS GAME
+##Requirements
+    1.Pycharm
+    2.python
+    3.pygame
+
 his program runs a virtual chess game by initializing the pieces and keeping track of their movements across the board. The challenge of this game is ensuring that all moves are legal. The important tasks it must accomplish are listed below. They form a basic summary of the main while loop that controls the program.
  
     1. Initialize a game containing an object for each piece on the board.
@@ -25,3 +30,6 @@ q -> Quit game.
 r -> Reset game.
 
 z -> undo the last move.
+
+#Note
+    if u open this game in vscode it will show An export error which thats why you should prefer pychar over vs code to run this game
