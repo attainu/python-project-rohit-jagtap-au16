@@ -1,11 +1,12 @@
-import pygame , sys , chessEngine
+import pygame , sys
+
 mainClock = pygame.time.Clock()
 from pygame.locals import *
 pygame.init()
 pygame.display.set_caption('GAME MENU')
-screen = pygame.display.set_mode((500,500),0,32)
+screen = pygame.display.set_mode((380,751),0,32)
 font = pygame.font.SysFont(None,20)
-from main_01 import main
+from chess.game.main_01 import main
 
 def draw_text(text,font,color,surface,x,y):
     textobj = font.render(text,1,color)
